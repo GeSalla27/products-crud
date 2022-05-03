@@ -1,0 +1,5 @@
+allOf:
+  - $ref: ./product-base-schema.yaml
+  - type: object
+    title: ProductUpdateSchema
+    description: Product schema for updating products

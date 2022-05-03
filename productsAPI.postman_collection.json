@@ -1,0 +1,163 @@
+{
+	"info": {
+		"_postman_id": "49b8c445-8d5a-43be-880b-99b7fc3f9f4f",
+		"name": "productsAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Busca todos produtos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/products",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Busca produto por nome",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/products/?name=Peça de Numero 10",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"products",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Peça de Numero 10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Busca por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/products/:product-id",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"products",
+						":product-id"
+					],
+					"variable": [
+						{
+							"key": "product-id",
+							"value": "4d13575f-64a1-4fd4-b96b-19a6e354388a"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cria produto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"code\": 10,\r\n    \"name\": \"Peça de Numero 10\",\r\n    \"price\": 200.50\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/products",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualiza produto",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Produto 6\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/products/:product-id",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"products",
+						":product-id"
+					],
+					"variable": [
+						{
+							"key": "product-id",
+							"value": "4d13575f-64a1-4fd4-b96b-19a6e354388a"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deleta produto",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/products/:product-id",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"products",
+						":product-id"
+					],
+					"variable": [
+						{
+							"key": "product-id",
+							"value": "972de27d-1225-4cf9-b171-a8e462a68d41"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "baseURL"
+		}
+	]
+}

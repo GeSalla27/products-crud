@@ -1,0 +1,25 @@
+summary: Create a product
+operationId: AddProduct
+description: Add a new product
+tags:
+  - Products
+requestBody:
+  content:
+    application/json:
+      schema:
+        $ref: ../../../schemas/products/product-input-schema.yaml
+responses:
+  201:
+    description: Returns the created product
+    content:
+      application/json:
+        schema:
+          $ref: ../../../schemas/products/product-response-schema.yaml
+  409:
+    description: A product with the name supplied already exists
+  422:
+    description: Error in some of the parameters sent
+    content:
+      application/json:
+        schema:
+          $ref: ../../../schemas/products/unprocessable-product-entity-error-schema.yaml

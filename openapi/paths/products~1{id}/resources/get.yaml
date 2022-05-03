@@ -1,0 +1,22 @@
+summary: Retrieve a product by id
+operationId: getProductById
+tags:
+  - Products
+parameters:
+  - in: path
+    name: id
+    description: The product's product ID
+    required: true
+    schema:
+      type: string
+      format: uuid
+      example: 814dba01-1f79-445e-b14a-4c9fd97ec63b
+responses:
+  200:
+    description: Returns the product
+    content:
+      application/json:
+        schema:
+          $ref: ../../../schemas/products/product-response-schema.yaml
+  404:
+    description: Product not found

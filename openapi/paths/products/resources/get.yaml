@@ -1,0 +1,21 @@
+summary: Retrieve the list of products.
+operationId: getProducts
+tags:
+  - Products
+parameters:
+  - in: query
+    name: name
+    required: false
+    schema:
+      type: string
+      example: Product One
+    description: The name of the product
+responses:
+  200:
+    description: Returns an array of products
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: ../../../schemas/products/product-response-schema.yaml

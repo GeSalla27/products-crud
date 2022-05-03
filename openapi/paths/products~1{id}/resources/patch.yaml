@@ -1,0 +1,36 @@
+summary: Update a product partially
+operationId: PatchTproduct
+description: Update a product partially
+tags:
+  - Products
+parameters:
+  - in: path
+    name: id
+    description: The product's ID
+    required: true
+    schema:
+      type: string
+      format: uuid
+      example: a2fadd68-69dd-468a-94c4-3304c064fb91
+requestBody:
+  content:
+    application/json:
+      schema:
+        $ref: ../../../schemas/products/product-input-schema.yaml
+responses:
+  200:
+    description: Returns the updated productproductt
+    content:
+      application/json:
+        schema:
+          $ref: ../../../schemas/products/product-response-schema.yaml
+  404:
+    description: Product not found
+  409:
+    description: A product with the name supplied already exists
+  422:
+    description: Error in some of the parameters sent
+    content:
+      application/json:
+        schema:
+          $ref: ../../../schemas/products/unprocessable-product-entity-error-schema.yaml

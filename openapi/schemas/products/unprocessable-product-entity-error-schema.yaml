@@ -1,0 +1,30 @@
+title: Unprocessable product Entity Error
+type: object
+description: Representation of an unprocessable product entity error
+properties:
+  statusCode:
+    type: string
+    example: 422
+  error:
+    type: string
+    example: 'Unprocessable Entity'
+  message:
+    type: array
+    items:
+      type: object
+      properties:
+        target:
+          type: object
+        property:
+          type: string
+          example: 'name'
+        children:
+          type: array
+          items:
+            type: string
+        constraints:
+          type: object
+          properties:
+            isEnum:
+              type: string
+              example: 'name must be a valid string'

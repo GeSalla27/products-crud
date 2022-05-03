@@ -1,0 +1,5 @@
+allOf:
+  - $ref: ./product-base-schema.yaml
+  - type: object
+    title: ListQuery
+    description: List route parameters

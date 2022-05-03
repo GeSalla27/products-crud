@@ -1,0 +1,27 @@
+allOf:
+  - $ref: ./product-base-schema.yaml
+  - type: object
+    title: ProductResponseSchema
+    description: Product schema that is returned by our api
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: 4d13575f-64a1-4fd4-b96b-19a6e354388a
+      code:
+        type: number
+        example: 1
+      name:
+        type: string
+        example: 'Product One'
+      price:
+        type: number
+        example: 10
+      created_at:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
+      updated_at:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'

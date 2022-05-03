@@ -1,0 +1,19 @@
+summary: Delete a product
+operationId: DeleteProduct
+description: Delete a product
+tags:
+  - Products
+parameters:
+  - in: path
+    name: id
+    description: The product's ID
+    required: true
+    schema:
+      type: string
+      format: uuid
+      example: 4d13575f-64a1-4fd4-b96b-19a6e354388a
+responses:
+  204:
+    description: Product deleted successfully
+  404:
+    description: Product not found

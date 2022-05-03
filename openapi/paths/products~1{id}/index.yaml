@@ -1,0 +1,6 @@
+get:
+  $ref: ./resources/get.yaml
+patch:
+  $ref: ./resources/patch.yaml
+delete:
+  $ref: ./resources/delete.yaml

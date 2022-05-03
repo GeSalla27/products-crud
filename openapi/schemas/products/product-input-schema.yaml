@@ -1,0 +1,5 @@
+allOf:
+  - $ref: ./product-base-schema.yaml
+  - type: object
+    title: ProductInputSchema
+    description: Product schema for creating products

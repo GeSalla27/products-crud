@@ -1,0 +1,239 @@
+openapi: 3.0.3
+info:
+  title: Product API
+  description: |
+    Product API
+  version: 0.1.0
+tags:
+  - name: Products
+    description: Product operations
+servers:
+  - url: 'http://localhost:{port}/'
+    description: Development server
+    variables:
+      port:
+        default: '3001'
+        description: The port your development server is running.
+components:
+  schemas:
+    UserResponse:
+      allOf:
+        - $ref: '#/components/schemas/UserInput/allOf/0'
+        - type: object
+          title: ProductResponseSchema
+          description: Product schema that is returned by our api
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: 4d13575f-64a1-4fd4-b96b-19a6e354388a
+            code:
+              type: number
+              example: 1
+            name:
+              type: string
+              example: Product One
+            price:
+              type: number
+              example: 10
+            created_at:
+              type: string
+              format: date-time
+              example: '2017-07-21T17:32:28Z'
+            updated_at:
+              type: string
+              format: date-time
+              example: '2017-07-21T17:32:28Z'
+    UserUpdate:
+      allOf:
+        - $ref: '#/components/schemas/UserInput/allOf/0'
+        - type: object
+          title: ProductUpdateSchema
+          description: Product schema for updating products
+    UserInput:
+      allOf:
+        - title: product
+          type: object
+          description: Base representation of a product
+          properties:
+            name:
+              type: string
+              example: Product One
+              description: Name of product
+            code:
+              type: number
+              example: 1
+            price:
+              type: number
+              example: 10
+        - type: object
+          title: ProductInputSchema
+          description: Product schema for creating products
+    ListQuery:
+      allOf:
+        - $ref: '#/components/schemas/UserInput/allOf/0'
+        - type: object
+          title: ListQuery
+          description: List route parameters
+    UnprocessableUserEntityError:
+      title: Unprocessable product Entity Error
+      type: object
+      description: Representation of an unprocessable product entity error
+      properties:
+        statusCode:
+          type: string
+          example: 422
+        error:
+          type: string
+          example: Unprocessable Entity
+        message:
+          type: array
+          items:
+            type: object
+            properties:
+              target:
+                type: object
+              property:
+                type: string
+                example: name
+              children:
+                type: array
+                items:
+                  type: string
+              constraints:
+                type: object
+                properties:
+                  isEnum:
+                    type: string
+                    example: name must be a valid string
+paths:
+  /products:
+    get:
+      summary: Retrieve the list of products.
+      operationId: getProducts
+      tags:
+        - Products
+      parameters:
+        - in: query
+          name: name
+          required: false
+          schema:
+            type: string
+            example: Product One
+          description: The name of the product
+      responses:
+        '200':
+          description: Returns an array of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+    post:
+      summary: Create a product
+      operationId: AddProduct
+      description: Add a new product
+      tags:
+        - Products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '201':
+          description: Returns the created product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '409':
+          description: A product with the name supplied already exists
+        '422':
+          description: Error in some of the parameters sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableUserEntityError'
+  '/products/{id}':
+    get:
+      summary: Retrieve a product by id
+      operationId: getProductById
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: id
+          description: The product's product ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 814dba01-1f79-445e-b14a-4c9fd97ec63b
+      responses:
+        '200':
+          description: Returns the product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '404':
+          description: Product not found
+    patch:
+      summary: Update a product partially
+      operationId: PatchTproduct
+      description: Update a product partially
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: id
+          description: The product's ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: a2fadd68-69dd-468a-94c4-3304c064fb91
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '200':
+          description: Returns the updated productproductt
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '404':
+          description: Product not found
+        '409':
+          description: A product with the name supplied already exists
+        '422':
+          description: Error in some of the parameters sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableUserEntityError'
+    delete:
+      summary: Delete a product
+      operationId: DeleteProduct
+      description: Delete a product
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: id
+          description: The product's ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: 4d13575f-64a1-4fd4-b96b-19a6e354388a
+      responses:
+        '204':
+          description: Product deleted successfully
+        '404':
+          description: Product not found

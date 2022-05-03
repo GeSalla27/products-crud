@@ -1,0 +1,33 @@
+openapi: 3.0.3
+info:
+  title: Product API
+  description: >
+    Product API
+  version: 0.1.0
+tags:
+  - name: Products
+    description: Product operations
+servers:
+  - url: http://localhost:{port}/
+    description: Development server
+    variables:
+      port:
+        default: '3001'
+        description: The port your development server is running.
+components:
+  schemas:
+    UserResponse:
+      $ref: ./schemas/products/product-response-schema.yaml
+    UserUpdate:
+      $ref: ./schemas/products/product-update-schema.yaml
+    UserInput:
+      $ref: ./schemas/products/product-input-schema.yaml
+    ListQuery:
+      $ref: ./schemas/products/list-query-schema.yaml
+    UnprocessableUserEntityError:
+      $ref: ./schemas/products/unprocessable-product-entity-error-schema.yaml
+paths:
+  /products:
+    $ref: ./paths/products/index.yaml
+  /products/{id}:
+    $ref: ./paths/products~1{id}/index.yaml

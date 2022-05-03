@@ -1,0 +1,14 @@
+title: product
+type: object
+description: Base representation of a product
+properties:
+  name:
+    type: string
+    example: 'Product One'
+    description: Name of product
+  code:
+    type: number
+    example: 1
+  price:
+    type: number
+    example: 10
