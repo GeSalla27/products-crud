@@ -1,23 +1,37 @@
-FROM node:16-alpine as dependencies
+# build
+FROM node:18-alpine AS builder
 
-WORKDIR /app
-COPY ./package.json ./package-lock.json /app/
-RUN npm ci --production
+ENV NODE_ENV build
 
-FROM node:16-alpine
+USER node
+WORKDIR /home/node
 
-LABEL maintainer=""
+COPY package*.json ./
+RUN npm ci
 
-RUN addgroup --system --gid 10001 service && \
-  adduser application --system --ingroup service --uid 10001
+COPY --chown=node:node . .
+RUN npm run build \
+    && npm prune --production
 
-COPY --chown=application:service ./dist /home/application/dist
-COPY --chown=application:service ./package.json ./package-lock.json /home/application/
-COPY --chown=application:service --from=dependencies /app/node_modules /home/application/node_modules
+FROM node:18-alpine
 
-USER application
-WORKDIR /home/application
+# env vars
+ENV NODE_ENV production
+
+ARG USER_ID=1001
+ARG GROUP_ID=1001
+
+RUN addgroup -g ${GROUP_ID} nonroot \
+    && adduser -D nonroot -u ${USER_ID} -g nonroot -G nonroot -s /bin/sh -h /
+
+COPY --chown=nonroot:nonroot --from=builder /home/node/dist/ /home/nonroot/dist/
+COPY --chown=nonroot:nonroot --from=builder /home/node/node_modules/ /home/nonroot/node_modules/ 
+COPY --chown=nonroot:nonroot ./package*.json /home/nonroot/
+
+USER nonroot
+WORKDIR /home/nonroot 
 
 EXPOSE 3000
 
-CMD node dist/main
+# Start the server using the production build
+CMD [ "node", "dist/main.js" ]

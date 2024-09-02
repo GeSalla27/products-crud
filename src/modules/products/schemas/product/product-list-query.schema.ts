@@ -1,5 +1,5 @@
-import { Exclude, Expose } from "@nestjs/class-transformer";
-import { IsNumber, IsOptional, IsString } from "@nestjs/class-validator";
+import { Exclude, Expose } from "class-transformer";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 
 @Exclude()
 export class ProductListQuerySchema {

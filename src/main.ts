@@ -1,8 +1,9 @@
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
-import { WinstonModule, WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
+import { WINSTON_MODULE_NEST_PROVIDER, WinstonModule } from "nest-winston";
 import winston from "winston";
 import { AppModule } from "./app.module";
+import { setupSwagger } from "./config/swagger";
 import winstonTransports from "./config/winston/winston.config";
 
 async function bootstrap() {
@@ -13,6 +14,7 @@ async function bootstrap() {
   app.useLogger(logger);
 
   app.setGlobalPrefix(process.env.BASE_PATH ?? "");
+  setupSwagger(app);
 
   await app.listen(process.env.APP_PORT ?? "3000");
 }

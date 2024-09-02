@@ -1,4 +1,3 @@
-import { TransformPlainToClass } from "@nestjs/class-transformer";
 import {
   Body,
   Controller,
@@ -16,7 +15,6 @@ import { ProductService } from "./product.service";
 import { IdSchema } from "./schemas/id-schema";
 import { ProductInputSchema } from "./schemas/product/product-input.schema";
 import { ProductListQuerySchema } from "./schemas/product/product-list-query.schema";
-import { ProductResponseSchema } from "./schemas/product/product-response.schema";
 import { ProductUpdateSchema } from "./schemas/product/product-update.schema";
 
 @Controller("products")
@@ -24,7 +22,6 @@ export class ProductsController {
   constructor(private productService: ProductService) {}
 
   @Post("")
-  @TransformPlainToClass(ProductResponseSchema)
   async createProduct(
     @Body() product: ProductInputSchema
   ): Promise<ProductEntity> {
@@ -32,7 +29,6 @@ export class ProductsController {
   }
 
   @Patch("/:id")
-  @TransformPlainToClass(ProductResponseSchema)
   updateProduct(
     @Param() idSchema: IdSchema,
     @Body() body: ProductUpdateSchema
@@ -41,13 +37,11 @@ export class ProductsController {
   }
 
   @Get("/:id")
-  @TransformPlainToClass(ProductResponseSchema)
   findProduct(@Param() idSchema: IdSchema): Promise<ProductEntity | undefined> {
     return this.productService.findOneOrFail(idSchema.id);
   }
 
   @Get("")
-  @TransformPlainToClass(ProductResponseSchema)
   findProducts(
     @Query() productListQuerySchema: ProductListQuerySchema
   ): Promise<ProductEntity[]> {

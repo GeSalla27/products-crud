@@ -1,5 +1,5 @@
-import { Exclude, Expose } from "@nestjs/class-transformer";
-import { IsNumber, IsString } from "@nestjs/class-validator";
+import { Exclude, Expose } from "class-transformer";
+import { IsNumber, IsString } from "class-validator";
 
 @Exclude()
 export class ProductInputSchema {
